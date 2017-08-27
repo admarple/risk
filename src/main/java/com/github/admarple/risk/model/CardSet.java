@@ -7,8 +7,7 @@ import lombok.NonNull;
 
 @Data
 public class CardSet {
-    @NonNull
-    private List<Card> cards;
+    @NonNull private List<Card> cards;
 
     public boolean isValid() {
         long numberOfTypes = cards.stream().map(Card::getType).distinct().count();

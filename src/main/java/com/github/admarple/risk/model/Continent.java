@@ -6,6 +6,6 @@ import lombok.Data;
 
 @Data
 public class Continent {
-    Set<Territory> territories;
-    int reinforcementBonusSize;
+    private Set<Territory> territories;
+    private int reinforcementBonusSize;
 }

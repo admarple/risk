@@ -5,8 +5,8 @@ import lombok.NonNull;
 
 @Data
 public class Card {
-    @NonNull final Territory territory;
-    @NonNull final CardType type;
+    @NonNull private final Territory territory;
+    @NonNull private final CardType type;
 
     public static enum CardType {
         INFANTRY,

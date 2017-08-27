@@ -20,10 +20,10 @@ import lombok.Setter;
 
 @Data
 public class GameMap {
-    final Set<Territory> territories = new HashSet<>();
-    final Set<Border> borders = new HashSet<>();
-    final Set<Continent> continents = new HashSet<>();
-    @NonNull ReinforcementRule reinforcementRule;
+    private final Set<Territory> territories = new HashSet<>();
+    private final Set<Border> borders = new HashSet<>();
+    private final Set<Continent> continents = new HashSet<>();
+    @NonNull private ReinforcementRule reinforcementRule;
 
     public Set<Border> getBorders() {
         return ImmutableSet.copyOf(borders);

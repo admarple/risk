@@ -15,6 +15,7 @@ import com.github.admarple.risk.gameplay.core.Command;
 import com.github.admarple.risk.gameplay.core.SingleActorGame;
 import com.github.admarple.risk.gameplay.order.DetermineOrderStage;
 import com.github.admarple.risk.gameplay.order.Roll;
+import com.github.admarple.risk.gameplay.setup.AcquireTerritorySetupStage;
 import com.github.admarple.risk.model.Board;
 import com.github.admarple.risk.model.Card;
 import com.github.admarple.risk.model.CardSet;
@@ -134,7 +135,7 @@ public class Risk implements SingleActorGame<Stage> {
 
         stages = Arrays.asList(
             new DetermineOrderStage(this)
-            //, new AcquireTerritorySetupStage()
+            , new AcquireTerritorySetupStage(this)
             //, new ReinforceSetupStage()
             //, new ConquestStage()
             , new Stage() {
