@@ -4,12 +4,15 @@ import java.util.Comparator;
 
 import org.apache.commons.lang3.RandomUtils;
 
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Setter;
 
 @Data
 public class Die implements Comparable<Die> {
     private final int min;
     private final int max;
+    @Setter(AccessLevel.PRIVATE)
     private int currentFace;
 
     public Die(int min, int max) {
@@ -19,7 +22,7 @@ public class Die implements Comparable<Die> {
     }
 
     public void roll() {
-        currentFace = RandomUtils.nextInt(min, max + 1);
+        setCurrentFace(RandomUtils.nextInt(min, max + 1));
     }
 
     @Override

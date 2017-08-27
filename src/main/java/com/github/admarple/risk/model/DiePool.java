@@ -15,7 +15,12 @@ public class DiePool {
         return dice.stream().limit(numberOfDice).collect(toList());
     }
 
-    public Die generateDie() {
-        return new Die(1,6);
+    /**
+     * Generate a new die.  The default is a 6-sided die
+     *
+     * @return
+     */
+    private Die generateDie() {
+        return new Die(1, 6);
     }
 }
