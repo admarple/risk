@@ -21,12 +21,14 @@ import com.google.common.collect.Lists;
 
 import lombok.Data;
 import lombok.NonNull;
-import lombok.experimental.Delegate;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Data
+@ToString(exclude = {"risk"})
 public class DetermineOrderStage implements Stage<DetermineOrderStageCommand> {
     @NonNull
-    @Delegate
     final Risk risk;
 
     private final Map<Player, Roll> rolls = new HashMap<>();
@@ -35,8 +37,8 @@ public class DetermineOrderStage implements Stage<DetermineOrderStageCommand> {
     public DetermineOrderStage(Risk risk) {
         this.risk = risk;
 
-        Iterator<Die> dice = getBoard().getDiePool().getDice(getPlayers().size()).iterator();
-        getPlayers().forEach(p -> rolls.put(p, new Roll(dice.next())));
+        Iterator<Die> dice = risk.getBoard().getDiePool().getDice(risk.getPlayers().size()).iterator();
+        risk.getPlayers().forEach(p -> rolls.put(p, new Roll(dice.next())));
     }
 
     @Override
@@ -47,6 +49,7 @@ public class DetermineOrderStage implements Stage<DetermineOrderStageCommand> {
 
     @Override
     public void perform(DetermineOrderStageCommand command) {
+        log.info("performing {}", getClass().getSimpleName());
         // TODO: Look at de-duping the "continue until done" logic with SingleActorGame#play()
         // TODO: Look at abstracting the "cycle through player turns" logic to be re-used by other Stages
         while (!isOrderDetermined()) {
@@ -54,6 +57,7 @@ public class DetermineOrderStage implements Stage<DetermineOrderStageCommand> {
             new SinglePhaseTurn<>(player,
                 new SingleStepPhase<>(
                     new RollStep(rolls.get(player)))).play();
+            risk.nextPlayer();
         }
 
         Validate.notNull(first);
@@ -81,7 +85,7 @@ public class DetermineOrderStage implements Stage<DetermineOrderStageCommand> {
                 (existing, added) -> { existing.addAll(added); return existing; }
             )).entrySet().stream()
             .sorted(Comparator.comparing(e -> e.getKey().getDie()))
-            .findFirst()
+            .reduce((a,b) -> b) // workaround for findLast()
             .map(Map.Entry::getValue)
             .filter(players -> players.size() > 0)
             .orElseThrow(() -> new RuntimeException("No player rolls found"));

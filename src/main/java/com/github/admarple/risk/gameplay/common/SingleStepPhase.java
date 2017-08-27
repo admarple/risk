@@ -5,7 +5,9 @@ import com.github.admarple.risk.gameplay.Step;
 
 import lombok.Data;
 import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Data
 public class SingleStepPhase<T extends Step> implements Phase<SingleStepPhaseCommand> {
 
@@ -19,6 +21,7 @@ public class SingleStepPhase<T extends Step> implements Phase<SingleStepPhaseCom
 
     @Override
     public void perform(SingleStepPhaseCommand command) {
+        log.info("performing phase {}", getClass().getSimpleName());
         step.play();
     }
 }

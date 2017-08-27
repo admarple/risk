@@ -6,8 +6,10 @@ import com.github.admarple.risk.model.Player;
 
 import lombok.Data;
 import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 
 // TODO: Look at de-duping with SingleStepPhase, e.g. into abstract class SingleNestedPlayable
+@Slf4j
 @Data
 public class SinglePhaseTurn<T extends Phase> implements Turn<SinglePhaseTurnCommand> {
 
@@ -21,6 +23,7 @@ public class SinglePhaseTurn<T extends Phase> implements Turn<SinglePhaseTurnCom
 
     @Override
     public void perform(SinglePhaseTurnCommand command) {
+        log.info("performing turn for {}", player.getName());
         phase.play();
     }
 }

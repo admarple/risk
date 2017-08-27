@@ -11,6 +11,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.Validate;
 
+import com.github.admarple.risk.gameplay.core.Command;
 import com.github.admarple.risk.gameplay.core.SingleActorGame;
 import com.github.admarple.risk.gameplay.order.DetermineOrderStage;
 import com.github.admarple.risk.gameplay.order.Roll;
@@ -123,6 +124,9 @@ public class Risk implements SingleActorGame<Stage> {
     private Player currentPlayer;
     private Iterator<Player> playerIterator;
 
+    // TODO: Remove after completing the other stages
+    private boolean forcedGameOver = false;
+
     public Risk(Board board, List<Player> players) {
         this.board = board;
         Validate.notEmpty(players);
@@ -133,6 +137,18 @@ public class Risk implements SingleActorGame<Stage> {
             //, new AcquireTerritorySetupStage()
             //, new ReinforceSetupStage()
             //, new ConquestStage()
+            , new Stage() {
+                @Override
+                public Command getCommand() {
+                    return new Command() { };
+                }
+
+                @Override
+                public void perform(Command command) {
+                    // Game Over
+                    forcedGameOver = true;
+                }
+            }
         );
         stageIterator = stages.iterator();
 
@@ -146,7 +162,7 @@ public class Risk implements SingleActorGame<Stage> {
     }
 
     public boolean gameOver() {
-        return getRemainingPlayers().size() <= 1;
+        return isForcedGameOver() || getRemainingPlayers().size() <= 1;
     }
 
     private List<Player> getRemainingPlayers() {
@@ -155,7 +171,7 @@ public class Risk implements SingleActorGame<Stage> {
             .collect(toList());
     }
 
-    private Player nextPlayer() {
+    public Player nextPlayer() {
         currentPlayer = playerIterator.next();
         return currentPlayer;
     }
