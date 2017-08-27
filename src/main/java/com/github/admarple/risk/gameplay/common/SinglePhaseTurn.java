@@ -8,22 +8,20 @@ import lombok.Data;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
-// TODO: Look at de-duping with SingleStepPhase, e.g. into abstract class SingleNestedPlayable
 @Slf4j
 @Data
-public class SinglePhaseTurn<T extends Phase> implements Turn<SinglePhaseTurnCommand> {
+public class SinglePhaseTurn<T extends Phase> extends SingleNestedPlayable<SinglePhaseTurnCommand, T> {
 
     @NonNull final Player player;
-    @NonNull final T phase;
 
-    @Override
-    public SinglePhaseTurnCommand getCommand() {
-        return new SinglePhaseTurnCommand();
+    public SinglePhaseTurn(Player player, T phase) {
+        super(phase, SinglePhaseTurnCommand::new);
+        this.player = player;
     }
 
     @Override
     public void perform(SinglePhaseTurnCommand command) {
         log.info("performing turn for {}", player.getName());
-        phase.play();
+        super.perform(command);
     }
 }

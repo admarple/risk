@@ -54,7 +54,7 @@ public class DetermineOrderStage implements Stage<DetermineOrderStageCommand> {
         // TODO: Look at abstracting the "cycle through player turns" logic to be re-used by other Stages
         while (!isOrderDetermined()) {
             Player player = risk.getCurrentPlayer();
-            new SinglePhaseTurn<>(player,
+            new SinglePhaseTurn<SingleStepPhase>(player,
                 new SingleStepPhase<>(
                     new RollStep(rolls.get(player)))).play();
             risk.nextPlayer();
