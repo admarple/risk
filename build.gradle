@@ -26,5 +26,18 @@ dependencies {
     compile 'org.slf4j:slf4j-api:1.7.25'
     compile 'org.slf4j:slf4j-simple:1.7.25'
 
+    // using PlantUML that was distributed with the MIT license (The version in Maven Central is GPL)
+    // From - http://sourceforge.net/projects/plantuml/files/plantuml-jar-mit-1.2017.15.zip/download
+    compile files('lib/plantuml.jar')
+
     testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+task runMain(type:JavaExec) {
+    main = 'com.github.admarple.risk.Main'
+    classpath = sourceSets.main.runtimeClasspath
+
+    // PlantUML expects dot to be at /usr/bin/dot
+    systemProperty 'GRAPHVIZ_DOT', '/usr/local/Cellar/graphviz/2.40.1/bin/dot'
+    standardInput System.in
 }

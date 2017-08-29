@@ -195,6 +195,9 @@ public class Risk implements SingleActorGame<Stage>, Plantable {
 
     @Override
     public String asPlantUML() {
-        return board.asPlantUML();
+        return String.join(System.lineSeparator(), Arrays.asList(
+            "@startuml",
+            board.asPlantUML(),
+            "@enduml"));
     }
 }

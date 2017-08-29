@@ -1,5 +1,8 @@
 package com.github.admarple.risk;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Arrays;
 
 import com.github.admarple.risk.gameplay.Risk;
@@ -12,6 +15,9 @@ import com.github.admarple.risk.model.ReinforcementRule;
 import com.github.admarple.risk.model.Territory;
 
 import lombok.extern.slf4j.Slf4j;
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.SourceStringReader;
 
 @Slf4j
 public class Main {
@@ -34,6 +40,21 @@ public class Main {
         log.info("Game finished: {}", risk);
         System.out.println("As PlantUML: ");
         System.out.println(risk.asPlantUML());
+        System.out.println("Try viewing as SVG at: " + writeSVG(risk).toURI());
+    }
+
+    public static File writeSVG(Risk risk) {
+        String fileName = "build/board.svg";
+
+        SourceStringReader reader = new SourceStringReader(risk.asPlantUML());
+        try (FileOutputStream fos = new FileOutputStream(fileName)) {
+            reader.outputImage(fos, new FileFormatOption(FileFormat.SVG));
+        }
+        catch (IOException e) {
+            log.warn("Unable to ");
+        }
+
+        return new File(fileName);
     }
 
     private static GameMap generateMap() {
