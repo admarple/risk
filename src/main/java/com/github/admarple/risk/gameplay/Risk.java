@@ -20,6 +20,7 @@ import com.github.admarple.risk.model.Board;
 import com.github.admarple.risk.model.Card;
 import com.github.admarple.risk.model.CardSet;
 import com.github.admarple.risk.model.Die;
+import com.github.admarple.risk.model.Plantable;
 import com.github.admarple.risk.model.Player;
 import com.google.common.collect.Iterators;
 
@@ -110,7 +111,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Data
 @Setter(AccessLevel.PACKAGE)
-public class Risk implements SingleActorGame<Stage> {
+public class Risk implements SingleActorGame<Stage>, Plantable {
     @NonNull
     private final Board board;
     private final List<Player> players = new LinkedList<>();
@@ -190,5 +191,10 @@ public class Risk implements SingleActorGame<Stage> {
     void includeAllPlayers() {
         playerIterator = Iterators.cycle(players);
         nextPlayer();
+    }
+
+    @Override
+    public String asPlantUML() {
+        return board.asPlantUML();
     }
 }

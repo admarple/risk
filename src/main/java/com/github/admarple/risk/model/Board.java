@@ -13,7 +13,7 @@ import lombok.Data;
 import lombok.NonNull;
 
 @Data
-public class Board {
+public class Board implements Plantable {
     @NonNull private GameMap map;
     private final Set<Army> armies = new HashSet<>();
     @NonNull private DiePool diePool;
@@ -48,5 +48,12 @@ public class Board {
 
         army.setLocation(territory);
         armies.add(army);
+    }
+
+    @Override
+    public String asPlantUML() {
+        StringBuilder sb = new StringBuilder(map.asPlantUML());
+        armies.forEach(army -> sb.append(army.asPlantUML()));
+        return sb.toString();
     }
 }

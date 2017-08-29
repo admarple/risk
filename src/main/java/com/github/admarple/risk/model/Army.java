@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(exclude = {"owner"})
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class Army {
+public class Army implements Plantable {
     @Setter(AccessLevel.PRIVATE)
     private int size;
     @NonNull private Territory location;
@@ -54,5 +54,12 @@ public class Army {
 
     public boolean isDestroyed() {
         return size < 1;
+    }
+
+    @Override
+    public String asPlantUML() {
+        String territoryName = location.getName();
+        return "" + territoryName + " : owner = " + owner.getName() + System.lineSeparator()
+            + territoryName + " : size = " + size + System.lineSeparator();
     }
 }

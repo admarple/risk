@@ -19,7 +19,7 @@ import lombok.NonNull;
 import lombok.Setter;
 
 @Data
-public class GameMap {
+public class GameMap implements Plantable {
     private final Set<Territory> territories = new HashSet<>();
     private final Set<Border> borders = new HashSet<>();
     private final Set<Continent> continents = new HashSet<>();
@@ -49,5 +49,13 @@ public class GameMap {
      */
     public void removeBorder(Border border) {
         borders.removeAll(Arrays.asList(border, border.opposite()));
+    }
+
+    @Override
+    public String asPlantUML() {
+        StringBuilder sb = new StringBuilder();
+        territories.forEach(territory -> sb.append(territory.asPlantUML()));
+        borders.forEach(border -> sb.append(border.asPlantUML()));
+        return sb.toString();
     }
 }

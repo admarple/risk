@@ -32,6 +32,8 @@ public class Main {
         risk.play();
 
         log.info("Game finished: {}", risk);
+        System.out.println("As PlantUML: ");
+        System.out.println(risk.asPlantUML());
     }
 
     private static GameMap generateMap() {

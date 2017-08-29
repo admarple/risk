@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 
 @Data
 @RequiredArgsConstructor
-public class Territory {
+public class Territory implements Plantable {
     public static final Territory NOWHERE = new Territory("Nowhere");
 
     public Territory(String name) {
@@ -17,4 +17,9 @@ public class Territory {
 
     @NonNull String name;
     @NonNull String id;
+
+    @Override
+    public String asPlantUML() {
+        return "object " + name + System.lineSeparator();
+    }
 }
