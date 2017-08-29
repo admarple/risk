@@ -9,6 +9,7 @@ import com.github.admarple.risk.gameplay.Risk;
 import com.github.admarple.risk.model.Board;
 import com.github.admarple.risk.model.Border;
 import com.github.admarple.risk.model.DiePool;
+import com.github.admarple.risk.model.Direction;
 import com.github.admarple.risk.model.GameMap;
 import com.github.admarple.risk.model.Player;
 import com.github.admarple.risk.model.ReinforcementRule;
@@ -61,6 +62,7 @@ public class Main {
         Territory westeros = new Territory("Westeros");
         Territory valyria = new Territory("Valyria");
         Border b = new Border(westeros, valyria);
+        b.setDirection(Direction.RIGHT);
 
         ReinforcementRule reinforcementRule = new ReinforcementRule() { };
 

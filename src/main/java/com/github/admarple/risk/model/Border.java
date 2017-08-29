@@ -7,13 +7,16 @@ import lombok.NonNull;
 public class Border implements Plantable {
     @NonNull private Territory first;
     @NonNull private Territory second;
+    private Direction direction = Direction.ARBITRARY;
 
     public Border opposite() {
-        return new Border(second, first);
+        Border opposite = new Border(second, first);
+        opposite.setDirection(direction.getOpposite());
+        return opposite;
     }
 
     @Override
     public String asPlantUML() {
-        return first.getName() + " -- " + second.getName() + System.lineSeparator();
+        return first.getName() + " -" + direction.asPlantUML() + "- " + second.getName() + System.lineSeparator();
     }
 }
