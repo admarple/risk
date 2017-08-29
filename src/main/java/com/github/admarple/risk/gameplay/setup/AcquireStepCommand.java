@@ -2,8 +2,6 @@ package com.github.admarple.risk.gameplay.setup;
 
 import java.util.stream.Collectors;
 
-import org.apache.commons.lang3.StringUtils;
-
 import com.github.admarple.risk.gameplay.Risk;
 import com.github.admarple.risk.gameplay.StepCommand;
 import com.github.admarple.risk.gameplay.core.UserPromptCommand;
@@ -19,10 +17,6 @@ public class AcquireStepCommand implements StepCommand, UserPromptCommand {
 
     @NonNull private final Risk risk;
     @NonNull private final Player player;
-
-    public Army getArmy() {
-        return player.getHoldingPool().split(1);
-    }
 
     public Territory getTerritory() {
         String requested = userInput();

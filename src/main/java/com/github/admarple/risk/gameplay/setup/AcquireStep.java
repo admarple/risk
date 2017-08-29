@@ -25,7 +25,7 @@ public class AcquireStep implements Step<AcquireStepCommand> {
         log.info("Acquire territory for player {}", player.getName());
         while (true) {
             try {
-                risk.getBoard().acquire(command.getArmy(), command.getTerritory());
+                risk.getBoard().acquire(player.getHoldingPool().split(1), command.getTerritory());
                 return;
             } catch (IllegalArgumentException e) {
                 log.warn("Error acquiring territory.  Please try again.", e);

@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class Army implements Plantable {
     @Setter(AccessLevel.PRIVATE)
-    private int size;
+    private int size = 1;
     @NonNull private Territory location;
     @NonNull private Player owner;
 
@@ -26,15 +26,18 @@ public class Army implements Plantable {
         Validate.isTrue(splitSize < getSize(), "Split size must be less than army size");
 
         Army split = new Army(getLocation(), getOwner());
+        getOwner().acquire(split);
         split.size = splitSize;
         this.size -= splitSize;
         return split;
     }
+
     public void accept(Army other) {
         Validate.isTrue(this.getOwner().equals(other.getOwner()), "Cannot merge different Players' armies");
 
         this.size += other.getSize();
     }
+
     public void join(Army other) {
         other.accept(this);
     }
@@ -46,13 +49,17 @@ public class Army implements Plantable {
         }
 
         this.size -= damage;
-        if (isDestroyed()) {
-            log.info("Army destroyed: {}", this);
+        if (isDefeated()) {
+            log.info("Army defeated: {}", this);
             this.location = Territory.NOWHERE;
         }
     }
 
-    public boolean isDestroyed() {
+    public boolean canSplit() {
+        return size > 1;
+    }
+
+    public boolean isDefeated() {
         return size < 1;
     }
 

@@ -3,23 +3,20 @@ package com.github.admarple.risk.gameplay;
 import static java.util.stream.Collectors.toList;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang3.Validate;
 
 import com.github.admarple.risk.gameplay.core.Command;
 import com.github.admarple.risk.gameplay.core.SingleActorGame;
 import com.github.admarple.risk.gameplay.order.DetermineOrderStage;
-import com.github.admarple.risk.gameplay.order.Roll;
 import com.github.admarple.risk.gameplay.setup.AcquireTerritorySetupStage;
+import com.github.admarple.risk.gameplay.setup.ReinforceSetupStage;
 import com.github.admarple.risk.model.Board;
 import com.github.admarple.risk.model.Card;
 import com.github.admarple.risk.model.CardSet;
-import com.github.admarple.risk.model.Die;
 import com.github.admarple.risk.model.Plantable;
 import com.github.admarple.risk.model.Player;
 import com.google.common.collect.Iterators;
@@ -28,7 +25,6 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.Setter;
-import lombok.experimental.Delegate;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -137,7 +133,7 @@ public class Risk implements SingleActorGame<Stage>, Plantable {
         stages = Arrays.asList(
             new DetermineOrderStage(this)
             , new AcquireTerritorySetupStage(this)
-            //, new ReinforceSetupStage()
+            , new ReinforceSetupStage(this)
             //, new ConquestStage()
             , new Stage() {
                 @Override

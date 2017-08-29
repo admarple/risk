@@ -69,7 +69,8 @@ public class DetermineOrderStage implements Stage<DetermineOrderStageCommand> {
     }
 
     /**
-     * NOTE: this "is..." method has side-effects
+     * NOTE: this "is..." method has side-effects, namely setting {@link this#first} or resetting the roll status for
+     * all winners.
      *
      * @return
      */

@@ -48,6 +48,7 @@ public class Board implements Plantable {
 
         army.setLocation(territory);
         armies.add(army);
+        army.getOwner().acquire(army);
     }
 
     @Override
