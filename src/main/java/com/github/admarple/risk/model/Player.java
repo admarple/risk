@@ -1,9 +1,11 @@
 package com.github.admarple.risk.model;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang3.Validate;
 
@@ -17,7 +19,7 @@ import lombok.NonNull;
 @EqualsAndHashCode(exclude = {"armies", "holdingPool"})
 public class Player {
     @NonNull private String name;
-    private final List<Card> hand = new LinkedList<>();
+    private final Set<Card> hand = new HashSet<>();
     private final Map<Territory, Army> armies = new HashMap<>();
     private boolean eliminated = false;
 
@@ -45,5 +47,9 @@ public class Player {
         if (!army.getLocation().equals(poolLocation)){
             armies.putIfAbsent(army.getLocation(), army);
         }
+    }
+
+    public boolean isDoneReinforcing() {
+        return holdingPool.canSplit();
     }
 }

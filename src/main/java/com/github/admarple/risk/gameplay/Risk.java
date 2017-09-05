@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.Validate;
 
+import com.github.admarple.risk.gameplay.conquest.ConquestStage;
 import com.github.admarple.risk.gameplay.core.Command;
 import com.github.admarple.risk.gameplay.core.SingleActorGame;
 import com.github.admarple.risk.gameplay.order.DetermineOrderStage;
@@ -108,8 +109,7 @@ import lombok.extern.slf4j.Slf4j;
 @Data
 @Setter(AccessLevel.PACKAGE)
 public class Risk implements SingleActorGame<Stage>, Plantable {
-    @NonNull
-    private final Board board;
+    @NonNull private final Board board;
     private final List<Player> players = new LinkedList<>();
     private final List<Card> drawPile = new LinkedList<>();
     private final List<CardSet> claimedSets = new LinkedList<>();
@@ -134,7 +134,7 @@ public class Risk implements SingleActorGame<Stage>, Plantable {
             new DetermineOrderStage(this)
             , new AcquireTerritorySetupStage(this)
             , new ReinforceSetupStage(this)
-            //, new ConquestStage()
+            , new ConquestStage(this)
             , new Stage() {
                 @Override
                 public Command getCommand() {

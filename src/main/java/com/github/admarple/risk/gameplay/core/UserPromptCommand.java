@@ -14,7 +14,17 @@ public interface UserPromptCommand extends Command {
      * TODO: There might be a better place to manage this singleton than an interface field.
      */
     Scanner SCANNER = new Scanner(System.in);
+
+    /**
+     * The prompt to print to the user before obatining their request
+     * @return
+     */
     String userPrompt();
+
+    /**
+     * The scanner from which to read the user's input
+     * @return
+     */
     default Scanner getScanner() {
         return SCANNER;
     }

@@ -17,8 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @ToString(exclude = {"risk"})
 public class ReinforceSetupStage implements Stage<ReinforceSetupStageCommand> {
 
-    @NonNull
-    final Risk risk;
+    @NonNull final Risk risk;
 
     @Override
     public ReinforceSetupStageCommand getCommand() {
