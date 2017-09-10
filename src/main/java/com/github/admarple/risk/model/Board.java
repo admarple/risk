@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.Validate;
@@ -91,6 +92,11 @@ public class Board implements Plantable {
 
     public Card draw() {
         return drawPile.pop();
+    }
+
+    public Optional<Army> getArmyByName(String name) {
+        return getArmies().stream().filter(army -> army.getLocation().getName().equals(name)).findFirst();
+
     }
 
     @Override

@@ -5,6 +5,7 @@ import java.util.Optional;
 import com.github.admarple.risk.gameplay.Risk;
 import com.github.admarple.risk.gameplay.Step;
 import com.github.admarple.risk.gameplay.core.Yieldable;
+import com.github.admarple.risk.model.Invasion;
 import com.github.admarple.risk.model.Player;
 
 import lombok.Data;
@@ -30,12 +31,11 @@ public class AttackStep implements Step<AttackStepCommand>, Yieldable<AttackStep
         log.info("Attacking for player {}", player.getName());
         while (true) {
             try {
-                // TODO: Optional<CommandOutput> selection = command.getFoo();
-                Optional selection = Optional.empty();
+                Optional<AttackStepCommand.Choice> choice = command.getChoice();
 
-                if (selection.isPresent()) {
+                if (choice.isPresent()) {
                     try {
-                        // attack
+                        new Invasion(choice.get().getSource(), choice.get().getDestination(), risk).play();
                         return;
                     } catch (IllegalArgumentException e) {
                         log.warn("Error attacking.  Please try again", e);
